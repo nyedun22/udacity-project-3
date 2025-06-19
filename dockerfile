@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy the current directory contents to the container at /app
-COPY ./analytics/ /app
+COPY /app
 
 # Install dependencies from requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
