@@ -5,10 +5,13 @@ phases:
     runtime-versions: 
       docker: 19
     commands: 
+      - echo "Checking if curl is installed..."
+      - if command -v curl > /dev/null; then echo "curl is installed"; else echo "curl is not installed"; fi
       - echo "Installing Docker Buildx"
       - mkdir -p ~/.docker/cli-plugins
       - curl -SL https://github.com/docker/buildx/releases/latest/download/buildx-$(uname -s)-$(uname -m) -o ~/.docker/cli-plugins/docker-buildx
       - chmod +x ~/.docker/cli-plugins/docker-buildx
+     
   pre_build: 
     commands: 
       - echo Logging into ECR 
