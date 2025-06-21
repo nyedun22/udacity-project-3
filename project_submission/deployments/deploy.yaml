@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: coworking
-        image: 535002849786.dkr.ecr.us-east-1.amazonaws.com/udacity-project3:0.0.1
+        image: 535002849786.dkr.ecr.us-east-1.amazonaws.com/udacity-project3:0.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -44,33 +44,30 @@ spec:
             port: 5153
           initialDelaySeconds: 5
           timeoutSeconds: 5
-        envFrom:
-        - configMapRef:
-            name: postgresql-service 
-        env:
+        env:  # Ensure this is indented correctly
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: my-secret
-              key: DB_PASSWORD
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: postgresql-service
-              key: DB_NAME
+              key: DB_PASSWORD  # Ensure this key exists in the Secret
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
               name: my-secret
-              key: DB_USERNAME
+              key: DB_USERNAME  # Ensure this key exists in the Secret             
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: postgresql-service-configmap  # Ensure this ConfigMap exists
+              key: DB_NAME  # Ensure this key exists in the ConfigMap
         - name: DB_HOST
           valueFrom:
-            secretKeyRef:
-              name: postgresql-service
-              key: DB_HOST
+            configMapKeyRef:
+              name: postgresql-service-configmap  # Ensure this ConfigMap exists
+              key: DB_HOST  # Ensure this key exists in the ConfigMap
         - name: DB_PORT
           valueFrom:
-            secretKeyRef:
-              name: postgresql-service
-              key: DB_PORT
-      restartPolicy: Always
+            configMapKeyRef:
+              name: postgresql-service-configmap  # Ensure this ConfigMap exists
+              key: DB_PORT  # Ensure this key exists in the ConfigMap
+    
