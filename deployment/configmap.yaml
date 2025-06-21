@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgresql-service 
+  name: postgresql-service-configmap
 data:
   DB_NAME: myudacitydb
   DB_USER: udacityuser
